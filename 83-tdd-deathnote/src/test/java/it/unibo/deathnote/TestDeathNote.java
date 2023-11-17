@@ -21,7 +21,7 @@ class TestDeathNote {
 
     @BeforeEach
     public void setUp() {
-        deathNote = new DeathNoteImpl()
+        deathNote = new DeathNoteImpl();
     }
 
 
@@ -46,7 +46,7 @@ class TestDeathNote {
 
     @Test
     public void testEmpyOrNull() {
-        for(int i=1; i <= DeathNote.RULES; i++) {
+        for(int i=1; i <= DeathNote.RULES.size(); i++) {
             final var rule = deathNote.getRule(i);
             assertNotNull(rule);
             assertFalse(rule.isBlank());
@@ -59,11 +59,11 @@ class TestDeathNote {
         deathNote.writeName(TO_KILL);
         assertTrue(deathNote.isNameWritten(TO_KILL));
         assertFalse(deathNote.isNameWritten(ANOTHER_TO_KILL));
-        assertFalse(" ");
+        assertFalse(deathNote.isNameWritten(" "));
     }
 
     @Test
-    public void testDeathCause() {
+    public void testDeathCause() throws InterruptedException {
         try {
             deathNote.writeDeathCause("Incidente");
             Assertions.fail("Expected IllegalStateException for writing death cause without a name in the DeathNote");
@@ -76,14 +76,14 @@ class TestDeathNote {
         assertEquals(deathNote.getDeathCause(TO_KILL), "heart attack");
         deathNote.writeName(ANOTHER_TO_KILL);
         assertTrue(deathNote.writeDeathCause("karting accident"));
-        assertTrue("karting accident", deathNote.getDeathCause(TO_KILL));
+        assertEquals("karting accident", deathNote.getDeathCause(TO_KILL));
         sleep(100);
         assertFalse(deathNote.writeDeathCause("golf accident"));
-        assertTrue("karting accident", deathNote.getDeathCause(TO_KILL));
+        assertEquals("karting accident", deathNote.getDeathCause(TO_KILL));
     }
 
    @Test
-   public void testDeathDetails() {
+   public void testDeathDetails() throws InterruptedException {
         try{
             deathNote.writeDetails("Chased by Turtles");
             Assertions.fail("Expected IllegalStateException for writing details before writing a name");
