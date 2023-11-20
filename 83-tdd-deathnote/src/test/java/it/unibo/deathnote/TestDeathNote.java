@@ -59,7 +59,7 @@ class TestDeathNote {
         deathNote.writeName(TO_KILL);
         assertTrue(deathNote.isNameWritten(TO_KILL));
         assertFalse(deathNote.isNameWritten(ANOTHER_TO_KILL));
-        assertFalse(deathNote.isNameWritten(" "));
+        assertFalse(deathNote.isNameWritten(""));
     }
 
     @Test
@@ -76,10 +76,10 @@ class TestDeathNote {
         assertEquals(deathNote.getDeathCause(TO_KILL), "heart attack");
         deathNote.writeName(ANOTHER_TO_KILL);
         assertTrue(deathNote.writeDeathCause("karting accident"));
-        assertEquals("karting accident", deathNote.getDeathCause(TO_KILL));
+        assertEquals("karting accident", deathNote.getDeathCause(ANOTHER_TO_KILL));
         sleep(100);
         assertFalse(deathNote.writeDeathCause("golf accident"));
-        assertEquals("karting accident", deathNote.getDeathCause(TO_KILL));
+        assertEquals("karting accident", deathNote.getDeathCause(ANOTHER_TO_KILL));
     }
 
    @Test
@@ -92,13 +92,13 @@ class TestDeathNote {
             assertFalse(e.getMessage().trim().isEmpty());
         }
         deathNote.writeName(TO_KILL);
-        assertEquals(deathNote.getDeathDetails(TO_KILL), " ");
+        assertEquals(deathNote.getDeathDetails(TO_KILL), "");
         assertTrue(deathNote.writeDetails("ran for too long"));
         assertEquals(deathNote.getDeathDetails(TO_KILL), "ran for too long");
         deathNote.writeName(ANOTHER_TO_KILL);
         sleep(6100);
         assertFalse(deathNote.writeDetails("Chased by Turtles"));
-        assertTrue(deathNote.writeDetails("ran for too long"));
+        assertEquals(deathNote.getDeathDetails(TO_KILL), "ran for too long");
    }
 
 }
